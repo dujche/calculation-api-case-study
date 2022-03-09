@@ -1,0 +1,150 @@
+openapi: 3.0.1
+info:
+  title: Calculation API
+  version: "v1, v2"
+servers:
+  - url: 'http://localhost:8000'
+    description: Development system
+paths:
+  /api/v1/calculations/{firstArgument}/{secondArgument}/{operation}:
+    get:
+      summary: Calculate (v1)
+      description: Execute calculation providing the operation in the url
+      parameters:
+        - $ref: '#/components/parameters/firstArgument'
+        - $ref: '#/components/parameters/secondArgument'
+        - in: path
+          name: operation
+          required: true
+          schema:
+            type: string
+            enum:
+              - add
+              - subtract
+              - multiply
+              - divide
+          description: Selected operation
+          example: divide
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResponse'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+  /api/v2/calculations/{firstArgument}/{secondArgument}/add:
+    get:
+      summary: Add (v2)
+      description: Add two arguments
+      parameters:
+        - $ref: '#/components/parameters/firstArgument'
+        - $ref: '#/components/parameters/secondArgument'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResponse'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /api/v2/calculations/{firstArgument}/{secondArgument}/subtract:
+    get:
+      summary: Subtract (v2)
+      description: Subtract two arguments
+      parameters:
+        - $ref: '#/components/parameters/firstArgument'
+        - $ref: '#/components/parameters/secondArgument'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResponse'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /api/v2/calculations/{firstArgument}/{secondArgument}/multiply:
+    get:
+      summary: Multiply (v2)
+      description: Multiply two arguments
+      parameters:
+        - $ref: '#/components/parameters/firstArgument'
+        - $ref: '#/components/parameters/secondArgument'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResponse'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /api/v2/calculations/{firstArgument}/{secondArgument}/divide:
+    get:
+      summary: Divide (v2)
+      description: Divide two arguments
+      parameters:
+        - $ref: '#/components/parameters/firstArgument'
+        - $ref: '#/components/parameters/secondArgument'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResponse'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+components:
+  parameters:
+    firstArgument:
+      in: path
+      name: firstArgument
+      required: true
+      schema:
+        type: number
+      description: First argument for the calculation
+      example: 13.23
+    secondArgument:
+      in: path
+      name: secondArgument
+      required: true
+      schema:
+        type: number
+      description: Second argument for the calculation
+      example: -3.1134
+  schemas:
+    CalculationResponse:
+      title: The response given by the selected operation
+      type: object
+      required:
+        - firstArgument
+        - secondArgument
+        - result
+      properties:
+        firstArgument:
+          type: number
+          description: First argument for the calculation
+          example: 13.23
+        secondArgument:
+          type: number
+          description: Second argument for the calculation
+          example: -3.1134
+        result:
+          type: number
+          description: The calculation result
+          example: -1.22

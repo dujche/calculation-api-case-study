@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+
+  php-calculation-api:
+    build:
+      context: .
+      target: calculations-api
+    ports:
+      - "8000:8000"

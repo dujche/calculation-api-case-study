@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+
+  php-calculation-api:
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8000:8000"
+    environment:
+      XDEBUG_MODE: coverage
+    command: >
+      sh -c "composer install && composer dump-autoload && symfony server:start"
